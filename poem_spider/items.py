@@ -14,6 +14,7 @@ class PoemItem(scrapy.Item):
     dynasty = scrapy.Field()
     translation = scrapy.Field()
     form = scrapy.Field()
+    content = scrapy.Field()
 
 
 
