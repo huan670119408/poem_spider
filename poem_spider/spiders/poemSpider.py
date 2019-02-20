@@ -14,8 +14,7 @@ class PoemSpider(scrapy.Spider):
     def parse(self, response):
         if self.count > 10:
             return
-        for sel in response.xpath('//p[@class="source"]/..'):  # contson
-            # print(sel.extract())
+        for sel in response.xpath('//p[@class="source"]/..'):
             title = sel.xpath('p[1]/a/b/text()').extract()
             author = sel.xpath('p[2]/a/text()').extract()
             content = sel.xpath('div[@class="contson"]').extract_first()  # 去html标签
