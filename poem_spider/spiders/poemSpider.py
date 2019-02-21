@@ -9,10 +9,10 @@ class PoemSpider(scrapy.Spider):
     start_urls = [
         "https://www.gushiwen.org/shiwen/"
     ]
-    count = 0
 
     def parse(self, response):
-        if self.count > 10:
+        page_size = self.settings.get('PAGE_SIZE')
+        if self.count > page_size:
             return
         for sel in response.xpath('//p[@class="source"]/..'):
             title = sel.xpath('p[1]/a/b/text()').extract()
@@ -28,8 +28,9 @@ class PoemSpider(scrapy.Spider):
             item['author'] = author[1]
             content = re.sub(r'\s+', '', content) # 去空白符
             item['content'] = content
-            # print(content)
+            item['key'] = item['author'] + '-' + item['dynasty'] + '-' + item['title']
             print(item)
+            yield item
         next = response.xpath('//form/div/a[@class="amore"]/@href').extract_first()
         url = response.urljoin(next)
         print(url)

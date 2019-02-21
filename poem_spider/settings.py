@@ -63,9 +63,9 @@ DEFAULT_REQUEST_HEADERS = {
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'poem_spider.pipelines.PoemSpiderPipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'poem_spider.pipelines.PoemPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -87,3 +87,12 @@ DEFAULT_REQUEST_HEADERS = {
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+PAGE_SIZE = 10
+
+MYSQL_HOST = 'localhost'
+MYSQL_DATABASE = 'poem_analysis'
+MYSQL_USER = 'root'
+MYSQL_PASSWORD = 'qq670119408'
+MYSQL_PORT = '3306'
+
