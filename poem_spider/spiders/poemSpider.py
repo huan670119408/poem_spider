@@ -26,7 +26,9 @@ class PoemSpider(scrapy.Spider):
             item['title'] = title[0]
             item['dynasty'] = author[0]
             item['author'] = author[1]
+            content = re.sub(r'\s+', '', content) # 去空白符
             item['content'] = content
+            # print(content)
             print(item)
         next = response.xpath('//form/div/a[@class="amore"]/@href').extract_first()
         url = response.urljoin(next)
