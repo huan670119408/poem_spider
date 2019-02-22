@@ -1,6 +1,7 @@
 import scrapy
 from poem_spider.items import PoemItem
 import re
+import uuid
 
 
 class PoemSpider(scrapy.Spider):
@@ -9,6 +10,7 @@ class PoemSpider(scrapy.Spider):
     start_urls = [
         "https://www.gushiwen.org/shiwen/"
     ]
+    count = 1
 
     def parse(self, response):
         page_size = self.settings.get('PAGE_SIZE')
@@ -20,20 +22,19 @@ class PoemSpider(scrapy.Spider):
             content = sel.xpath('div[@class="contson"]').extract_first()  # 去html标签
             pat1 = re.compile('<[^>]+>', re.S)
             content = pat1.sub('', content)
-            # pat2 = re.compile("\'[^\']+\'",re.S)
-            # content = pat2.sub("",content)
             item = PoemItem()
+            item['id'] = str(uuid.uuid1()).replace('-', '')
             item['title'] = title[0]
             item['dynasty'] = author[0]
             item['author'] = author[1]
-            content = re.sub(r'\s+', '', content) # 去空白符
+            content = re.sub(r'\s+', '', content)  # 去空白符
             item['content'] = content
-            item['key'] = item['author'] + '-' + item['dynasty'] + '-' + item['title']
-            print(item)
+            item['poem_key'] = item['author'] + '-' + item['dynasty'] + '-' + item['title']
+            # print(item)
             yield item
         next = response.xpath('//form/div/a[@class="amore"]/@href').extract_first()
         url = response.urljoin(next)
-        print(url)
+        # print(url)
         self.count += 1
-        print(self.count)
+        # print(self.count)
         yield scrapy.Request(url=url, callback=self.parse)

@@ -15,9 +15,8 @@ class PoemItem(scrapy.Item):
     translation = scrapy.Field()
     form = scrapy.Field()
     content = scrapy.Field()
-    table = scrapy.Field()
     id = scrapy.Field()
-    key = scrapy.Field()
+    poem_key = scrapy.Field()
 
 
 

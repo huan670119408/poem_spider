@@ -88,11 +88,11 @@ ITEM_PIPELINES = {
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-PAGE_SIZE = 10
+PAGE_SIZE = 1
 
-MYSQL_HOST = 'localhost'
+MYSQL_HOST = '192.168.31.115'
 MYSQL_DATABASE = 'poem_analysis'
 MYSQL_USER = 'root'
 MYSQL_PASSWORD = 'qq670119408'
-MYSQL_PORT = '3306'
+MYSQL_PORT = 3306
 
