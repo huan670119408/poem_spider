@@ -9,19 +9,17 @@ import scrapy
 
 
 class PoemItem(scrapy.Item):
+    id = scrapy.Field()
     title = scrapy.Field()
     author = scrapy.Field()
     dynasty = scrapy.Field()
     translation = scrapy.Field()
     form = scrapy.Field()
     content = scrapy.Field()
-    id = scrapy.Field()
-    poem_key = scrapy.Field()
-
-
 
 
 class PoetItem(scrapy.Item):
+    id = scrapy.Field()
     name = scrapy.Field()
     dynasty = scrapy.Field()
     introduction = scrapy.Field()

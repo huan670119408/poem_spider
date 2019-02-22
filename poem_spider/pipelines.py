@@ -1,4 +1,5 @@
 import pymysql
+from poem_spider.items import PoemItem, PoetItem
 
 
 class PoemPipeline(object):
@@ -20,7 +21,7 @@ class PoemPipeline(object):
         )
 
     def open_spider(self, spider):
-        self.db = pymysql.connect(self.host, self.user, self.password, self.database, self.port, charset='utf8')
+        self.db = pymysql.connect(self.host, self.user, self.password, self.database, self.port, charset='utf8mb4')
         self.cursor = self.db.cursor()
 
     def close_spider(self, spider):
@@ -30,9 +31,16 @@ class PoemPipeline(object):
         data = dict(item)
         keys = ', '.join(data.keys())
         values = ','.join(['%s'] * len(data))
-        del_sql = 'DELETE FROM POEM WHERE POEM_KEY = %s'
-        insert_sql = 'INSERT INTO POEM (%s) VALUES (%s)' % (keys, values)
-        self.cursor.execute(del_sql, data['poem_key'])
-        self.cursor.execute(insert_sql, tuple(data.values()))
-        self.db.commit()
+        if isinstance(item, PoemItem):
+            del_sql = 'DELETE FROM POEM WHERE TITLE = %s AND DYNASTY = %s AND AUTHOR = %s'
+            insert_sql = 'INSERT INTO POEM (%s) VALUES (%s)' % (keys, values)
+            self.cursor.execute(del_sql, (data['title'], data['dynasty'], data['author']))
+            self.cursor.execute(insert_sql, tuple(data.values()))
+            self.db.commit()
+        elif isinstance(item, PoetItem):
+            del_sql = 'DELETE FROM POET WHERE DYNASTY = %s AND NAME = %s'
+            insert_sql = 'INSERT INTO POET (%s) VALUES (%s)' % (keys, values)
+            self.cursor.execute(del_sql, (data['dynasty'], data['name']))
+            self.cursor.execute(insert_sql, tuple(data.values()))
+            self.db.commit()
         return item

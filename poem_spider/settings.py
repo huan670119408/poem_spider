@@ -88,7 +88,7 @@ ITEM_PIPELINES = {
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-PAGE_SIZE = 1
+COUNT = 1000000
 
 MYSQL_HOST = '192.168.31.115'
 MYSQL_DATABASE = 'poem_analysis'
